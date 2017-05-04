@@ -27,7 +27,7 @@ public class AppInfoFragment extends Fragment {
         return fragment;
     }
 
-    private  ApplicationInfo applicationInfo;
+    private ApplicationInfo applicationInfo;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,5 +42,20 @@ public class AppInfoFragment extends Fragment {
         packageNameView = (TextView) root.findViewById(R.id.package_name);
         packageNameView.setText(applicationInfo.packageName);
         return root;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState == null) {
+
+            AppTitleSubFragment fragment = AppTitleSubFragment
+                    .newInstance(applicationInfo);
+
+            getChildFragmentManager().beginTransaction()
+                    .add(R.id.app_info_layout, fragment)
+                    .commit();
+        }
     }
 }

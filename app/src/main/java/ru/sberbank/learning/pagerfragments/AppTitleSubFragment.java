@@ -24,8 +24,8 @@ public class AppTitleSubFragment extends Fragment {
     private static final String ARG_APPLICATION = "application";
     private TextView packageNameView;
 
-    public static AppInfoFragment newInstance(ApplicationInfo app) {
-        AppInfoFragment fragment = new AppInfoFragment();
+    public static AppTitleSubFragment newInstance(ApplicationInfo app) {
+        AppTitleSubFragment fragment = new AppTitleSubFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_APPLICATION, app);
 
@@ -72,6 +72,7 @@ public class AppTitleSubFragment extends Fragment {
 
         public AppInfoTask(ApplicationInfo appInfo,
                            TextView nameView, ImageView iconView) {
+            applicationInfo = appInfo;
             nameViewRef = new WeakReference<>(nameView);
             iconViewRef = new WeakReference<>(iconView);
             packageManager = iconView.getContext().getPackageManager();
