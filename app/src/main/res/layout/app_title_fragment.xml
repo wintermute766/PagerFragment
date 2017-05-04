@@ -5,13 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/application_icon"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        tools:src="@mipmap/ic_launcher"
+        android:layout_gravity="center_horizontal"/>
+
     <TextView
-        android:id="@+id/package_name"
+        android:id="@+id/application_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="com.example.application"
-        android:textAppearance="@style/PackageTextAppearance"
+        android:gravity="center_horizontal"
         android:padding="@dimen/package_padding"
-        />
+        android:textAppearance="@style/PackageTextAppearance"
+        tools:text="Application"/>
 
 </LinearLayout>
