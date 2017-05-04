@@ -1,7 +1,10 @@
 package ru.sberbank.learning.pagerfragments;
 
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -41,6 +44,16 @@ public class AppInfoFragment extends Fragment {
         View root = inflater.inflate(R.layout.app_info_fragment,container, false);
         packageNameView = (TextView) root.findViewById(R.id.package_name);
         packageNameView.setText(applicationInfo.packageName);
+
+        boolean powerSave = false;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            PowerManager powerManager =
+                    (PowerManager) getContext()
+                            .getSystemService(Context.POWER_SERVICE);
+            powerSave = powerManager.isPowerSaveMode();
+        }
+        packageNameView.setText(powerSave? "Power save" : "No power save");
+
         return root;
     }
 
