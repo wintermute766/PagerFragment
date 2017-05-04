@@ -16,13 +16,14 @@ public class AppsPagerAdapter extends FragmentStatePagerAdapter {
     private final List<ApplicationInfo> applicationsList;
 
     public AppsPagerAdapter(FragmentManager fm,
-                            List<ApplicationInfo> applicationsList) {
+                            List<ApplicationInfo> applications) {
         super(fm);
+        applicationsList = applications;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return null;
+        return AppInfoFragment.newInstance(applicationsList.get(position));
     }
 
     @Override

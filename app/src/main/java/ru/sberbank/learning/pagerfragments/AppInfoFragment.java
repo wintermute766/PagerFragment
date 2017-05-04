@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * Created by user10 on 04.05.2017.
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 public class AppInfoFragment extends Fragment {
 
     private static final String ARG_APPLICATION = "application";
+    private TextView packageNameView;
 
     public static AppInfoFragment newInstance(ApplicationInfo app) {
         AppInfoFragment fragment = new AppInfoFragment();
@@ -36,6 +38,9 @@ public class AppInfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View root = inflater.inflate(R.layout.app_info_fragment,container, false);
+        packageNameView = (TextView) root.findViewById(R.id.package_name);
+        packageNameView.setText(applicationInfo.packageName);
+        return root;
     }
 }

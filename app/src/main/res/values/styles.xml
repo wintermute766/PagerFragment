@@ -5,4 +5,7 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="PackageTextAppearance"
+        parent="@android:style/TextAppearance.Holo.Medium"/>
+
 </resources>
