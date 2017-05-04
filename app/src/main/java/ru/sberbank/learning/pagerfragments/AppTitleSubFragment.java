@@ -1,6 +1,8 @@
 package ru.sberbank.learning.pagerfragments;
 
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -53,24 +55,50 @@ public class AppTitleSubFragment extends Fragment {
         return root;
     }
 
-    private static class AppinfoTask extends AsyncTask<Void, Void, Void> {
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        AppInfoTask task = new AppInfoTask(applicationInfo, applicationName, applicationIcon);
+        task.execute();
+    }
+
+    private static class AppInfoTask extends AsyncTask<Void, Void, AppInfo> {
 
         private WeakReference<TextView> nameViewRef;
         private WeakReference<ImageView> iconViewRef;
+        private PackageManager packageManager;
+        private ApplicationInfo applicationInfo;
 
-        public AppinfoTask(TextView nameView, ImageView iconView) {
+        public AppInfoTask(ApplicationInfo appInfo,
+                           TextView nameView, ImageView iconView) {
             nameViewRef = new WeakReference<>(nameView);
             iconViewRef = new WeakReference<>(iconView);
+            packageManager = iconView.getContext().getPackageManager();
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
-            return null;
+        protected AppInfo doInBackground(Void... params) {
+            AppInfo info = new AppInfo();
+            info.name = packageManager.getApplicationLabel(applicationInfo).toString();
+            info.icon = packageManager.getApplicationIcon(applicationInfo);
+            return info;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(AppInfo result) {
+            ImageView iconView = iconViewRef.get();
+            TextView titleView = nameViewRef.get();
+
+            if (iconView != null && titleView != null) {
+                iconView.setImageDrawable(result.icon);
+                titleView.setText(result.name);
+            }
         }
+    }
+
+    private static final class AppInfo {
+        private String name;
+        private Drawable icon;
     }
 }
